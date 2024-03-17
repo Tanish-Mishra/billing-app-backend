@@ -39,14 +39,16 @@ const editProductById = async (req, res, next) => {
         message: "Bad Request",
       });
     }
-
+    const formatter = new Intl.NumberFormat("en-US");
+    const formattedBasePrice = formatter.format(basePrice);
+    const formattedSellingPrice = formatter.format(sellingPrice);
     await Product.updateOne(
       { _id: productId },
       {
         $set: {
           productName,
-          basePrice,
-          sellingPrice,
+          basePrice: formattedBasePrice,
+          sellingPrice: formattedSellingPrice,
         },
       }
     );
