@@ -10,10 +10,13 @@ const addProduct = async (req, res, next) => {
       });
     }
 
+    const formatter = new Intl.NumberFormat("en-US");
+    const formattedBasePrice = formatter.format(basePrice);
+    const formattedSellingPrice = formatter.format(sellingPrice);
     const newProduct = new Product({
       productName,
-      basePrice,
-      sellingPrice,
+      basePrice: formattedBasePrice,
+      sellingPrice: formattedSellingPrice,
     });
 
     await newProduct.save();
@@ -28,7 +31,7 @@ const addProduct = async (req, res, next) => {
 
 const editProductById = async (req, res, next) => {
   try {
-    const productId = req.body.id;
+    const productId = req.params.id;
     const { productName, basePrice, sellingPrice } = req.body;
 
     if (!productId || !productName || !basePrice || !sellingPrice) {
@@ -38,7 +41,7 @@ const editProductById = async (req, res, next) => {
     }
 
     await Product.updateOne(
-      { _id: id },
+      { _id: productId },
       {
         $set: {
           productName,
@@ -58,7 +61,8 @@ const editProductById = async (req, res, next) => {
 
 const getAllProducts = async (req, res, next) => {
   try {
-    const title = req.body.title || "";
+    let title = req.body.title || "";
+    title = title.trim()
 
     const productData = await Product.find(
       {
@@ -72,32 +76,31 @@ const getAllProducts = async (req, res, next) => {
     );
 
     res.status(200).json({
-      data: productData,
+      products: productData,
     });
   } catch (error) {
     next(error);
   }
 };
 
-const deleteProductById = async(req,res,next) => {
-    try {
-        const productId = req.body.id;
-     if(!productId) {
-        res.status(400).json({
-            "message":"Bad Request",
-        })
-     }
-       
-    await Product.deleteOne({ _id: productId})
-
-     res.status(200).json({
-        "message":"Product Deleted Successfully"
-     })
-
-    } catch (error) {
-         next(error)
+const deleteProductById = async (req, res, next) => {
+  try {
+    const productId = req.params.id;
+    if (!productId) {
+      res.status(400).json({
+        message: "Bad Request",
+      });
     }
-}
+
+    await Product.deleteOne({ _id: productId });
+
+    res.status(200).json({
+      message: "Product Deleted Successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
 module.exports = {
   addProduct,

@@ -4,8 +4,8 @@ const {addProduct, getAllProducts, editProductById, deleteProductById} = require
 const { verifyToken }  = require('../middlewares/authMiddleware')
 
 router.post('/add-product',verifyToken,addProduct)
-router.get('/get-products',verifyToken,getAllProducts)
-router.patch('/edit-product',verifyToken,editProductById)
-router.delete('/delete-product',verifyToken,deleteProductById)
+router.post('/get-products',verifyToken,getAllProducts)
+router.patch('/edit-product/:id',verifyToken,editProductById)
+router.delete('/delete-product/:id',verifyToken,deleteProductById)
 
 module.exports = router

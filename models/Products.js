@@ -6,11 +6,11 @@ const productSchema = new mongoose.Schema({
         required: true,
     },
     basePrice: {
-        type: Number,
+        type: String,
         required: true,
     },
     sellingPrice: {
-        type: Number,
+        type: String,
         required: true,
     }
 },{timestamps: true})

@@ -29,6 +29,8 @@ const createAdmin = async(req,res,next) => {
 }
 
 const loginAdmin = async(req,res,next) => {
+
+  try {
   const { email, password } = req.body;
 
   if(!email || !password) {
@@ -59,7 +61,9 @@ const loginAdmin = async(req,res,next) => {
    email: email,
    token: token,
   })
-
+} catch (error) {
+  next(error)
+}
 }
 
 module.exports = {
