@@ -3,7 +3,7 @@ const Admin = require('../models/Admin')
 const verifyToken = async(req,res,next) => {
   try {
 
-    const token = req.headers.authorization.split(' ')
+    const token = req.header('Authorization').split(' ')
 
     if(!token || token.length < 2) {
      res.status(404).json({
