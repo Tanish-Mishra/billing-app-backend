@@ -9,6 +9,7 @@ const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || "localhost";
 const productRoute = require('./routes/productRoute')
 const adminRoute = require('./routes/adminRoutes')
+const billRoute = require('./routes/billRoutes')
 const errorHandler = require('./middlewares/errorHandler')
 
 app.use(cors())
@@ -16,6 +17,7 @@ app.use(express.json())
 
 app.use('/api/v1/product',productRoute)
 app.use('/api/v1/admin',adminRoute)
+app.use('/api/v1/bill',billRoute)
 app.get('/api/v1/health',(req,res)=>{
     res.status(200).json({
         "message": "Server is Running Healthy!"
