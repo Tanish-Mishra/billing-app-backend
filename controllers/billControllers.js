@@ -5,7 +5,7 @@ const billUser = async(req,res,next) => {
     try{
  const { clientName, contactNo, totalAmount, products} = req.body;
 
- if(!clientName || !contactNo || !totalAmount) {
+ if(!clientName || !contactNo || !totalAmount || !products) {
      res.status(400).json({
          "message": "Bad Request",
      })
