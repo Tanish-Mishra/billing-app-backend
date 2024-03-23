@@ -12,6 +12,10 @@ const billSchema = new mongoose.Schema({
     totalAmount: {
         type: String,
         required: true,
+    },
+    products: {
+        type: Array,
+        required: true,
     }
 },{timestamps:true})
 

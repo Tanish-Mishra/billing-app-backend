@@ -1,7 +1,9 @@
 const Bill = require('../models/Bills')
 
-const billUser = (req,res,next) => {
- const { clientName, contactNo, totalAmount} = req.body;
+const billUser = async(req,res,next) => {
+
+    try{
+ const { clientName, contactNo, totalAmount, products} = req.body;
 
  if(!clientName || !contactNo || !totalAmount) {
      res.status(400).json({
@@ -13,17 +15,37 @@ const billUser = (req,res,next) => {
     clientName,
     contactNo,
     totalAmount,
+    products,
  })
 
- newBill.save()
+  await newBill.save()
  
  res.status(201).json({
     'message':"Bill Saved Successfully"
  })
 
+} catch (error) {
+    next(error)
+}
+
+}
+
+const getBills = async(req,res,next) => {
+    try{
+
+      const data = await Bill.find()
+      res.status(200).json({
+        "bills": data,
+      })
+
+    } catch (error) {
+        next(error)
+    }
+      
 }
 
 
 module.exports = {
     billUser,
+    getBills
 }
