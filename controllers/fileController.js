@@ -29,7 +29,7 @@ const control = async(req,res,next) => {
     await fileData.save()
 
     const responseWhatsappMessage = await sendInvoice(req?.body?.mobileNumber,response?.url)
-    if(!responseWhatsappMessage.sid) {
+    if(!responseWhatsappMessage?.sid) {
         res.status(401).json({
             "message":"Failed to Send on Whatsapp!"
            })
